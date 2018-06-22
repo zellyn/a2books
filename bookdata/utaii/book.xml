@@ -1,0 +1,9 @@
+<book id="utaii">
+  <title>Understanding the Apple II</title>
+  <authors>
+    <author>James Fielding Sather</author>
+  </authors>
+  <url>https://archive.org/details/understanding_the_apple_ii</url>
+  <isbn>0-912985-01-1</isbn>
+  <image-url-template>https://ia800908.us.archive.org/BookReader/BookReaderImages.php?zip=/32/items/understanding_the_apple_ii/understanding_the_apple_ii_jp2.zip&amp;file=understanding_the_apple_ii_jp2/understanding_the_apple_ii_{{printf &#34;%04d&#34; $page}}.jp2&amp;scale={{$scale}}&amp;rotate=0</image-url-template>
+</book>

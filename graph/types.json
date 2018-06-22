@@ -1,0 +1,5 @@
+{
+  "Book": "github.com/zellyn/transcriber/data.Book",
+  "Chapter": "github.com/zellyn/transcriber/data.Chapter",
+  "Page": "github.com/zellyn/transcriber/data.Page"
+}

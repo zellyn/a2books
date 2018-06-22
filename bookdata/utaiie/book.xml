@@ -1,0 +1,9 @@
+<book id="utaiie">
+  <title>Understanding the Apple IIe</title>
+  <authors>
+    <author>James Fielding Sather</author>
+  </authors>
+  <url>https://archive.org/details/Understanding_the_Apple_IIe</url>
+  <isbn>0-8359-8019-7</isbn>
+  <image-url-template>https://ia600909.us.archive.org/BookReader/BookReaderImages.php?zip=/30/items/Understanding_the_Apple_IIe/Understanding_the_Apple_IIe_jp2.zip&amp;file=Understanding_the_Apple_IIe_jp2/Understanding_the_Apple_IIe_{{printf &#34;%04d&#34; $page}}.jp2&amp;scale={{$scale}}&amp;rotate=0</image-url-template>
+</book>

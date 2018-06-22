@@ -1,0 +1,43 @@
+type Book {
+  id: ID!
+  title: String!
+  authors: [String!]!
+  chapters: [Chapter!]!
+  url: String
+  isbn: String!
+  imageUrlTemplate: String!
+}
+
+type Chapter {
+  id: ID!
+  number: String
+  title: String
+  subtitle: String
+  firstPage: Int
+  lastPage: Int
+  pages: [Page!]!
+}
+
+type Page {
+  id: ID!
+  visibleNumber: String!
+  actualNumber: Int!
+}
+
+type Query {
+  books: [Book!]!
+}
+
+type Mutation {
+  createBook(book:BookInput!): Book!
+  updateBook(book:BookInput!): Book!
+}
+
+input BookInput {
+  id: ID
+  title: String
+  authors: [String!]
+  url: String
+  isbn: String
+  imageUrlTemplate: String
+}
