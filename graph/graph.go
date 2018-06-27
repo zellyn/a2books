@@ -57,6 +57,7 @@ func (app *App) Mutation_createBook(ctx context.Context, input BookInput) (data.
 }
 
 func (app *App) Mutation_updateBook(ctx context.Context, input BookInput) (data.Book, error) {
+	fmt.Println("Mutation_updateBook")
 	book, err := app.Store.GetBook(orEmpty(input.ID))
 	if err != nil {
 		return book, err
