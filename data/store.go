@@ -19,28 +19,28 @@ func NewStore(path string) *Store {
 	return &Store{Path: path}
 }
 
-func (s *Store) GetBook(id string) (Book, error) {
-	if !slugRe.MatchString(id) {
-		return Book{}, fmt.Errorf("invalid book ID: %q", id)
+func (s *Store) GetBook(slug string) (Book, error) {
+	if !slugRe.MatchString(slug) {
+		return Book{}, fmt.Errorf("invalid book slug: %q", slug)
 	}
 	var b Book
-	bb, err := ioutil.ReadFile(filepath.Join(s.Path, id, "book.xml"))
+	bb, err := ioutil.ReadFile(filepath.Join(s.Path, slug, "book.xml"))
 	if err != nil {
 		return b, err
 	}
 
 	if err := xml.Unmarshal(bb, &b); err != nil {
-		return b, err
+		return b, fmt.Errorf("error unmarshaling xml for %q: %v", slug, err)
 	}
 
 	return b, nil
 }
 
 func (s *Store) WriteBook(book Book) error {
-	if !slugRe.MatchString(book.ID) {
-		return fmt.Errorf("invalid book ID: %q", book.ID)
+	if !slugRe.MatchString(book.Slug) {
+		return fmt.Errorf("invalid book slug: %q", book.Slug)
 	}
-	if err := os.MkdirAll(filepath.Join(s.Path, book.ID), 0755); err != nil {
+	if err := os.MkdirAll(filepath.Join(s.Path, book.Slug), 0755); err != nil {
 		return err
 	}
 	bb, err := xml.MarshalIndent(book, "", "  ")
@@ -48,7 +48,7 @@ func (s *Store) WriteBook(book Book) error {
 		return err
 	}
 
-	if err := ioutil.WriteFile(filepath.Join(s.Path, book.ID, "book.xml"), bb, 0644); err != nil {
+	if err := ioutil.WriteFile(filepath.Join(s.Path, book.Slug, "book.xml"), bb, 0644); err != nil {
 		return err
 	}
 	return nil

@@ -1,4 +1,4 @@
-//go:generate gqlgen -typemap types.json -schema schema.graphql
+//go:generate gqlgen
 
 package graph
 
@@ -31,10 +31,10 @@ func (app *App) Chapter_pages(ctx context.Context, obj *data.Chapter) ([]data.Pa
 	return nil, nil
 }
 
-func (app *App) Mutation_createBook(ctx context.Context, input BookInput) (data.Book, error) {
+func (app *App) Mutation_createBook(ctx context.Context, slug string, input BookInput) (data.Book, error) {
 	fmt.Println("Mutation_createBook")
 	book := data.Book{
-		ID:               orEmpty(input.ID),
+		Slug:             slug,
 		Title:            orEmpty(input.Title),
 		Authors:          input.Authors,
 		URL:              orEmpty(input.Url),
@@ -42,9 +42,6 @@ func (app *App) Mutation_createBook(ctx context.Context, input BookInput) (data.
 		ImageURLTemplate: orEmpty(input.ImageUrlTemplate),
 	}
 
-	if book.ID == "" {
-		return book, fmt.Errorf("cannot create book without an ID")
-	}
 	if book.Title == "" {
 		return book, fmt.Errorf("cannot create book without a title")
 	}
@@ -56,9 +53,9 @@ func (app *App) Mutation_createBook(ctx context.Context, input BookInput) (data.
 	return book, nil
 }
 
-func (app *App) Mutation_updateBook(ctx context.Context, input BookInput) (data.Book, error) {
+func (app *App) Mutation_updateBook(ctx context.Context, slug string, input BookInput) (data.Book, error) {
 	fmt.Println("Mutation_updateBook")
-	book, err := app.Store.GetBook(orEmpty(input.ID))
+	book, err := app.Store.GetBook(slug)
 	if err != nil {
 		return book, err
 	}
@@ -94,6 +91,11 @@ func (app *App) Mutation_updateBook(ctx context.Context, input BookInput) (data.
 		}
 	}
 	return book, nil
+}
+
+func (app *App) Query_book(ctx context.Context, slug string) (*data.Book, error) {
+	book, err := app.Store.GetBook(slug)
+	return &book, err
 }
 
 func (app *App) Query_books(ctx context.Context) ([]data.Book, error) {

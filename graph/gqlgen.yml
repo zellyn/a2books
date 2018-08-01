@@ -1,0 +1,12 @@
+schema: schema.graphql
+exec:
+  filename: generated.go
+model:
+  filename: models_gen.go
+models:
+  Book:
+    model: github.com/zellyn/transcriber/data.Book
+  Chapter:
+    model: github.com/zellyn/transcriber/data.Chapter
+  Page:
+    model: github.com/zellyn/transcriber/data.Page

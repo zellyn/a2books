@@ -1,0 +1,10 @@
+<book slug="beneath_apple_prodos">
+  <title>Beneath Apple ProDOS</title>
+  <authors>
+    <author>Don D. Worth</author>
+    <author>Pieter M. Lechner</author>
+  </authors>
+  <url>https://archive.org/stream/Beneath_Apple_ProDOS_Alt</url>
+  <isbn>0-912985-05-4</isbn>
+  <image-url-template>https://ia800900.us.archive.org/BookReader/BookReaderImages.php?zip=/8/items/Beneath_Apple_ProDOS_Alt/Beneath_Apple_ProDOS_Alt_jp2.zip&amp;file=Beneath_Apple_ProDOS_Alt_jp2/Beneath_Apple_ProDOS_Alt_{{printf &#34;%04d&#34; $page}}.jp2&amp;scale={{$scale}}&amp;rotate=0</image-url-template>
+</book>

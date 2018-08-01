@@ -4,7 +4,7 @@ import "encoding/xml"
 
 type Book struct {
 	XMLName          xml.Name `xml:"book"`
-	ID               string   `xml:"id,attr"`
+	Slug             string   `xml:"slug,attr"`
 	Title            string   `xml:"title"`
 	Authors          []string `xml:"authors>author"`
 	URL              string   `xml:"url"`

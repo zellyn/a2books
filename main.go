@@ -6,14 +6,19 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/rs/cors"
 	"github.com/vektah/gqlgen/handler"
 	"github.com/zellyn/transcriber/graph"
 )
 
+func corsAll(h http.Handler) http.Handler {
+	return cors.AllowAll().Handler(h)
+}
+
 func main() {
 	/*
 			utaiie := data.Book{
-				ID:               "utaiie",
+				Slug:             "utaiie",
 				Title:            "Understanding the Apple IIe",
 				Authors:          []string{"James Fielding Sather"},
 				URL:              "https://archive.org/details/Understanding_the_Apple_IIe",
@@ -39,9 +44,9 @@ func main() {
 	}
 
 	app := graph.NewApp("bookdata")
-	http.Handle("/", handler.Playground("Transcriber", "/query"))
-	http.Handle("/query", handler.GraphQL(graph.MakeExecutableSchema(app)))
+	http.Handle("/", handler.Playground("Transcriber", "/graphql"))
+	http.Handle("/graphql", corsAll(handler.GraphQL(graph.MakeExecutableSchema(app))))
 
-	fmt.Println("Listening on :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	fmt.Println("Listening on :3020")
+	log.Fatal(http.ListenAndServe(":3020", nil))
 }

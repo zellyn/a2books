@@ -1,5 +1,5 @@
 type Book {
-  id: ID!
+  slug: ID!
   title: String!
   authors: [String!]!
   chapters: [Chapter!]!
@@ -24,17 +24,18 @@ type Page {
   actualNumber: Int!
 }
 
+# Main Query object.
 type Query {
   books: [Book!]!
+  book(slug: ID!): Book
 }
 
 type Mutation {
-  createBook(book:BookInput!): Book!
-  updateBook(book:BookInput!): Book!
+  createBook(slug:ID!, book:BookInput!): Book!
+  updateBook(slug:ID!, book:BookInput!): Book!
 }
 
 input BookInput {
-  id: ID
   title: String
   authors: [String!]
   url: String

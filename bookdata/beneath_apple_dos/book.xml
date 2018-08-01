@@ -1,0 +1,10 @@
+<book slug="beneath_apple_dos">
+  <title>Beneath Apple DOS</title>
+  <authors>
+    <author>Don Worth</author>
+    <author>Pieter Lechner</author>
+  </authors>
+  <url>https://archive.org/details/Beneath_Apple_DOS_alt</url>
+  <isbn>0-912985-00-3</isbn>
+  <image-url-template>https://ia801703.us.archive.org/BookReader/BookReaderImages.php?zip=/9/items/Beneath_Apple_DOS_alt/Beneath_Apple_DOS_alt_jp2.zip&amp;file=Beneath_Apple_DOS_alt_jp2/Beneath_Apple_DOS_alt_{{printf &#34;%04d&#34; $page}}.jp2&amp;scale={{$scale}}&amp;rotate=0</image-url-template>
+</book>
