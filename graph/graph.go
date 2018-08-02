@@ -21,18 +21,42 @@ func NewApp(path string) *App {
 	}
 }
 
-func (app *App) Book_chapters(ctx context.Context, obj *data.Book) ([]data.Chapter, error) {
-	fmt.Println("Book_chapters")
+func (a *App) Book() BookResolver {
+	return &bookResolver{a}
+}
+
+func (a *App) Chapter() ChapterResolver {
+	return &chapterResolver{a}
+}
+
+func (a *App) Mutation() MutationResolver {
+	return &mutationResolver{a}
+}
+
+func (a *App) Query() QueryResolver {
+	return &queryResolver{a}
+}
+
+type bookResolver struct{ *App }
+
+type chapterResolver struct{ *App }
+
+type mutationResolver struct{ *App }
+
+type queryResolver struct{ *App }
+
+func (a *bookResolver) Chapters(ctx context.Context, obj *data.Book) ([]data.Chapter, error) {
+	fmt.Println("bookResolver.Chapters")
 	return nil, nil
 }
 
-func (app *App) Chapter_pages(ctx context.Context, obj *data.Chapter) ([]data.Page, error) {
-	fmt.Println("Chapter_pages")
+func (a *chapterResolver) Pages(ctx context.Context, obj *data.Chapter) ([]data.Page, error) {
+	fmt.Println("chapterResolver.Pages")
 	return nil, nil
 }
 
-func (app *App) Mutation_createBook(ctx context.Context, slug string, input BookInput) (data.Book, error) {
-	fmt.Println("Mutation_createBook")
+func (a *mutationResolver) CreateBook(ctx context.Context, slug string, input BookInput) (data.Book, error) {
+	fmt.Println("mutationResolver.CreateBook")
 	book := data.Book{
 		Slug:             slug,
 		Title:            orEmpty(input.Title),
@@ -46,16 +70,16 @@ func (app *App) Mutation_createBook(ctx context.Context, slug string, input Book
 		return book, fmt.Errorf("cannot create book without a title")
 	}
 
-	if err := app.Store.WriteBook(book); err != nil {
+	if err := a.Store.WriteBook(book); err != nil {
 		return data.Book{}, err
 	}
 
 	return book, nil
 }
 
-func (app *App) Mutation_updateBook(ctx context.Context, slug string, input BookInput) (data.Book, error) {
-	fmt.Println("Mutation_updateBook")
-	book, err := app.Store.GetBook(slug)
+func (a *mutationResolver) UpdateBook(ctx context.Context, slug string, input BookInput) (data.Book, error) {
+	fmt.Println("mutationResolver.UpdateBook")
+	book, err := a.Store.GetBook(slug)
 	if err != nil {
 		return book, err
 	}
@@ -86,21 +110,21 @@ func (app *App) Mutation_updateBook(ctx context.Context, slug string, input Book
 	}
 
 	if updated {
-		if err := app.Store.WriteBook(book); err != nil {
+		if err := a.Store.WriteBook(book); err != nil {
 			return data.Book{}, err
 		}
 	}
 	return book, nil
 }
 
-func (app *App) Query_book(ctx context.Context, slug string) (*data.Book, error) {
-	book, err := app.Store.GetBook(slug)
+func (a *queryResolver) Book(ctx context.Context, slug string) (*data.Book, error) {
+	book, err := a.Store.GetBook(slug)
 	return &book, err
 }
 
-func (app *App) Query_books(ctx context.Context) ([]data.Book, error) {
-	fmt.Println("Query_books")
-	return app.Store.GetBooks()
+func (a *queryResolver) Books(ctx context.Context) ([]data.Book, error) {
+	fmt.Println("queryResolver.Books")
+	return a.Store.GetBooks()
 }
 
 func orEmpty(s *string) string {

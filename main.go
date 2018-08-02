@@ -45,7 +45,7 @@ func main() {
 
 	app := graph.NewApp("bookdata")
 	http.Handle("/", handler.Playground("Transcriber", "/graphql"))
-	http.Handle("/graphql", corsAll(handler.GraphQL(graph.MakeExecutableSchema(app))))
+	http.Handle("/graphql", corsAll(handler.GraphQL(graph.NewExecutableSchema(app))))
 
 	fmt.Println("Listening on :3020")
 	log.Fatal(http.ListenAndServe(":3020", nil))
