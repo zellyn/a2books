@@ -9,6 +9,16 @@ useful to me and other emulator writers. But of course I'd like to
 build a generally useful tool in the process, so the big goal is to
 create a useful platform for transcribing any old technical book.
 
+## Vision
+
+The eventual goal is to draw rectangles on the page to mark columns,
+diagrams, images, etc., then do another round of rectangles to divide
+each area up into individual paragraphs, and then let you transcribe
+one paragraph at a time: all the sort of thing you can do fairly
+mindlessly while watching TV.
+
+## Status and intended architecture
+
 It being a side project, I'm also doing a bit of experimenting with
 technologies that I wouldn't sensibly use at work. The backend is
 fairly boring, written in Go, with XML flat files as the data format,
