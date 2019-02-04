@@ -1,4 +1,4 @@
-//go:generate gqlgen
+//go:generate go run ../scripts/gqlgen.go -v
 
 package graph
 
@@ -61,9 +61,9 @@ func (a *mutationResolver) CreateBook(ctx context.Context, slug string, input Bo
 		Slug:             slug,
 		Title:            orEmpty(input.Title),
 		Authors:          input.Authors,
-		URL:              orEmpty(input.Url),
+		URL:              orEmpty(input.URL),
 		ISBN:             orEmpty(input.Isbn),
-		ImageURLTemplate: orEmpty(input.ImageUrlTemplate),
+		ImageURLTemplate: orEmpty(input.ImageURLTemplate),
 	}
 
 	if book.Title == "" {
@@ -96,16 +96,16 @@ func (a *mutationResolver) UpdateBook(ctx context.Context, slug string, input Bo
 		book.Authors = input.Authors
 		updated = true
 	}
-	if input.Url != nil {
-		book.URL = *input.Url
+	if input.URL != nil {
+		book.URL = *input.URL
 		updated = true
 	}
 	if input.Isbn != nil {
 		book.ISBN = *input.Isbn
 		updated = true
 	}
-	if input.ImageUrlTemplate != nil {
-		book.ImageURLTemplate = *input.ImageUrlTemplate
+	if input.ImageURLTemplate != nil {
+		book.ImageURLTemplate = *input.ImageURLTemplate
 		updated = true
 	}
 

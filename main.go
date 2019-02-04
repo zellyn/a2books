@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/99designs/gqlgen/handler"
 	"github.com/rs/cors"
-	"github.com/vektah/gqlgen/handler"
 	"github.com/zellyn/transcriber/graph"
 )
 
@@ -45,7 +45,7 @@ func main() {
 
 	app := graph.NewApp("bookdata")
 	http.Handle("/", handler.Playground("Transcriber", "/graphql"))
-	http.Handle("/graphql", corsAll(handler.GraphQL(graph.NewExecutableSchema(app))))
+	http.Handle("/graphql", corsAll(handler.GraphQL(graph.NewExecutableSchema(graph.Config{Resolvers: app}))))
 
 	fmt.Println("Listening on :3020")
 	log.Fatal(http.ListenAndServe(":3020", nil))
