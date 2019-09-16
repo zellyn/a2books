@@ -1,4 +1,4 @@
-//go:generate go run ../scripts/gqlgen.go -v
+//go:generate go run github.com/99designs/gqlgen -v
 
 package graph
 
@@ -45,19 +45,19 @@ type mutationResolver struct{ *App }
 
 type queryResolver struct{ *App }
 
-func (a *bookResolver) Chapters(ctx context.Context, obj *data.Book) ([]data.Chapter, error) {
+func (a *bookResolver) Chapters(ctx context.Context, obj *data.Book) ([]*data.Chapter, error) {
 	fmt.Println("bookResolver.Chapters")
 	return nil, nil
 }
 
-func (a *chapterResolver) Pages(ctx context.Context, obj *data.Chapter) ([]data.Page, error) {
+func (a *chapterResolver) Pages(ctx context.Context, obj *data.Chapter) ([]*data.Page, error) {
 	fmt.Println("chapterResolver.Pages")
 	return nil, nil
 }
 
-func (a *mutationResolver) CreateBook(ctx context.Context, slug string, input BookInput) (data.Book, error) {
+func (a *mutationResolver) CreateBook(ctx context.Context, slug string, input BookInput) (*data.Book, error) {
 	fmt.Println("mutationResolver.CreateBook")
-	book := data.Book{
+	book := &data.Book{
 		Slug:             slug,
 		Title:            orEmpty(input.Title),
 		Authors:          input.Authors,
@@ -71,13 +71,13 @@ func (a *mutationResolver) CreateBook(ctx context.Context, slug string, input Bo
 	}
 
 	if err := a.Store.WriteBook(book); err != nil {
-		return data.Book{}, err
+		return nil, err
 	}
 
 	return book, nil
 }
 
-func (a *mutationResolver) UpdateBook(ctx context.Context, slug string, input BookInput) (data.Book, error) {
+func (a *mutationResolver) UpdateBook(ctx context.Context, slug string, input BookInput) (*data.Book, error) {
 	fmt.Println("mutationResolver.UpdateBook")
 	book, err := a.Store.GetBook(slug)
 	if err != nil {
@@ -111,18 +111,17 @@ func (a *mutationResolver) UpdateBook(ctx context.Context, slug string, input Bo
 
 	if updated {
 		if err := a.Store.WriteBook(book); err != nil {
-			return data.Book{}, err
+			return nil, err
 		}
 	}
 	return book, nil
 }
 
 func (a *queryResolver) Book(ctx context.Context, slug string) (*data.Book, error) {
-	book, err := a.Store.GetBook(slug)
-	return &book, err
+	return a.Store.GetBook(slug)
 }
 
-func (a *queryResolver) Books(ctx context.Context) ([]data.Book, error) {
+func (a *queryResolver) Books(ctx context.Context) ([]*data.Book, error) {
 	fmt.Println("queryResolver.Books")
 	return a.Store.GetBooks()
 }

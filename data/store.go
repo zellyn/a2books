@@ -19,24 +19,24 @@ func NewStore(path string) *Store {
 	return &Store{Path: path}
 }
 
-func (s *Store) GetBook(slug string) (Book, error) {
+func (s *Store) GetBook(slug string) (*Book, error) {
 	if !slugRe.MatchString(slug) {
-		return Book{}, fmt.Errorf("invalid book slug: %q", slug)
+		return nil, fmt.Errorf("invalid book slug: %q", slug)
 	}
-	var b Book
+	b := &Book{}
 	bb, err := ioutil.ReadFile(filepath.Join(s.Path, slug, "book.xml"))
 	if err != nil {
-		return b, err
+		return nil, err
 	}
 
-	if err := xml.Unmarshal(bb, &b); err != nil {
-		return b, fmt.Errorf("error unmarshaling xml for %q: %v", slug, err)
+	if err := xml.Unmarshal(bb, b); err != nil {
+		return nil, fmt.Errorf("error unmarshaling xml for %q: %v", slug, err)
 	}
 
 	return b, nil
 }
 
-func (s *Store) WriteBook(book Book) error {
+func (s *Store) WriteBook(book *Book) error {
 	if !slugRe.MatchString(book.Slug) {
 		return fmt.Errorf("invalid book slug: %q", book.Slug)
 	}
@@ -54,13 +54,13 @@ func (s *Store) WriteBook(book Book) error {
 	return nil
 }
 
-func (s *Store) GetBooks() ([]Book, error) {
+func (s *Store) GetBooks() ([]*Book, error) {
 	files, err := ioutil.ReadDir(s.Path)
 	if err != nil {
 		return nil, err
 	}
 
-	var books []Book
+	var books []*Book
 
 	for _, f := range files {
 		if f.IsDir() {
