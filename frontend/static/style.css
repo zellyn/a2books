@@ -1,0 +1,10 @@
+/* Nothing here yet. */
+
+rekt-editor {
+    width: 400px;
+}
+
+#rects {
+  display: inline-block;
+  vertical-align: top;
+}
