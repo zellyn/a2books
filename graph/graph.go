@@ -47,7 +47,9 @@ type queryResolver struct{ *App }
 
 func (a *bookResolver) Chapters(ctx context.Context, obj *data.Book) ([]*data.Chapter, error) {
 	fmt.Println("bookResolver.Chapters")
-	return nil, nil
+	return []*data.Chapter{
+		{},
+	}, nil
 }
 
 func (a *chapterResolver) Pages(ctx context.Context, obj *data.Chapter) ([]*data.Page, error) {

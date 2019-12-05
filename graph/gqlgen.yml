@@ -6,6 +6,9 @@ model:
 models:
   Book:
     model: github.com/zellyn/transcriber/data.Book
+    fields:
+      chapters:
+        resolver: false
   Chapter:
     model: github.com/zellyn/transcriber/data.Chapter
   Page:
